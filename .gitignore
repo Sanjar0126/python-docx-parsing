@@ -1,0 +1,7 @@
+venv
+docs
+__pycache__
+.idea
+.env
+.vscode
+output/*
