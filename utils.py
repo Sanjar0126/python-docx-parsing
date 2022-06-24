@@ -22,11 +22,11 @@ def get_file_names(subfolder):
     return listdir(subfolder)
 
 def save_json_file(object, file_name, path):
-    file_count = len(glob.glob1(f"./{path}",f"{file_name}_*"))
+    # file_count = len(glob.glob1(f"./{path}",f"{file_name}_*"))
     
-    file_count = 'temp'
+    # file_count = 'temp'
     
-    with open(f'{path}/{file_name}_{file_count}.json', 'w', encoding='utf-8') as f:
+    with open(f'{path}/{file_name}.json', 'w', encoding='utf-8') as f:
         json.dump(object, f, ensure_ascii=False, indent=4)
         
 def get_rId_xml(xmlstring):

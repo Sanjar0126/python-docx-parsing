@@ -2,7 +2,7 @@ from uuid import NAMESPACE_DNS
 import utils
 import re
 
-SUB_FOLDER = "docs_test"
+SUB_FOLDER = "docs"
 IMG_FOLDER = "images"
 
 XML_RUN_TEXT_PATH = ".//w:t"
@@ -10,9 +10,7 @@ XML_RUN_TEXT_PATH = ".//w:t"
 def main():
     print("starting")
 
-    result = []
     files = utils.get_file_names(SUB_FOLDER)
-    
     
     for file in files:
         doc = utils.open_docx(f"{SUB_FOLDER}/{file}")
@@ -114,13 +112,8 @@ def main():
         d_ans = None
         correct = None
         question_images = []
-        
-        result.append({
-            "name": file,
-            "test_list": test_list,
-        })
     
-    utils.save_json_file(result, "tests", "output")
+        utils.save_json_file(test_list, file, "output")
 
 def write_test(question, a, b, c, d, answer, order, images=[]):
     question = re.sub(r'^[#][\d]+.', "", question)
