@@ -5,6 +5,11 @@ from os import listdir
 from lxml import etree
 import uuid
 import ziamath as zm
+from PIL import Image
+from io import BytesIO
+from wand.image import Image as wima
+
+EMF_FILE = 'image/x-emf'
 
 XML_NAMESPACES = {
             'w':'http://schemas.openxmlformats.org/wordprocessingml/2006/main',
@@ -41,11 +46,24 @@ def get_rId_xml(xmlstring):
 
 def save_image(doc, rId, output):
     relation = doc.part.rels[rId]
+        
+    file_name = f"{str(uuid.uuid4())}.webp"
     
-    file_name = f"{str(uuid.uuid4())}.{relation.target_part.image.ext}"
     
-    with open(f'{output}/{file_name}', 'wb') as f:
-        f.write(relation.target_part.blob)
+    
+    if relation.target_part.content_type == EMF_FILE:
+        with open(f'{output}/{file_name}', 'wb') as f:
+            f.write(relation.target_part.blob)
+        with wima(filename=f'{output}/{file_name}') as wand_img:
+            wand_img.format = 'webp'
+
+    else:
+        img = Image.open(BytesIO(relation.target_part.blob))
+
+        if relation.target_part.content_type != EMF_FILE:
+            img.thumbnail(size=[500, 500])
+        
+        img.save(f'{output}/{file_name}', "webp")
     
     return file_name
 

@@ -47,8 +47,11 @@ def main():
             
             for child in paragraph_xml:
                 if child.tag == f"{{{utils.XML_NAMESPACES['w']}}}r":
-                    xml_text = utils.find_from_xml(XML_RUN_TEXT_PATH, child)
-                    paragraph_text = paragraph_text + xml_text.text
+                    run_xml = utils.find_from_xml(XML_RUN_TEXT_PATH, child)
+                    
+                    xml_text = "" if run_xml is None else run_xml.text
+                    
+                    paragraph_text = paragraph_text + xml_text
                 elif child.tag == f"{{{utils.XML_NAMESPACES['m']}}}oMath":
                     svg_file = utils.get_math(child, IMG_FOLDER)
                     question_images.append(svg_file)

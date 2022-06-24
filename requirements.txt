@@ -1,5 +1,7 @@
 lxml==4.9.0
+Pillow==9.1.1
 python-docx==0.8.11
 SVGMath==0.3.3
+Wand==0.6.7
 ziafont==0.4
 ziamath==0.6
