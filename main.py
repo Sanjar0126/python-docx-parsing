@@ -27,7 +27,7 @@ def main():
         
         for paragraph in doc.paragraphs:
             num_question_reg = re.match(r'^[#][\d]+', paragraph.text)
-            question_reg = re.search(r'[A-D]+\)', paragraph.text)
+            question_reg = re.search(r'[A-D,А,В,С]+\)', paragraph.text)
             
             paragraph_xml = utils.get_paragraph_xml(paragraph._p.xml)
             
@@ -74,9 +74,9 @@ def main():
                 question = f"{question}\n{paragraph_text}"
 
             if question_reg:
-                a_b_match = re.search(r'(?<=A\))(.*?)(?=B\)|$)', paragraph_text)
-                b_c_match = re.search(r'(?<=B\))(.*?)(?=C\)|$)', paragraph_text)
-                c_d_match = re.search(r'(?<=C\))(.*?)(?=D\)|$)', paragraph_text)
+                a_b_match = re.search(r'(?<=[A,А]\))(.*?)(?=[B,В]\)|$)', paragraph_text)
+                b_c_match = re.search(r'(?<=[B,В]\))(.*?)(?=[C,С]\)|$)', paragraph_text)
+                c_d_match = re.search(r'(?<=[C,С]\))(.*?)(?=D\)|$)', paragraph_text)
                 d_match = re.search(r'(?<=D\))(.*?)$', paragraph_text)
                 
                 if a_b_match:
